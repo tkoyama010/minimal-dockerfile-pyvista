@@ -3,6 +3,8 @@ FROM python:3.7-slim
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook
 
+RUN apt update && apt -y install git libgl1-mesa-dev xvfb
+
 # create user with a home directory
 ARG NB_USER
 ARG NB_UID
@@ -18,7 +20,6 @@ WORKDIR ${HOME}
 USER ${USER}
 
 # install pyvista
-RUN apt update && apt -y install git libgl1-mesa-dev xvfb
 # RUN pip install --no-cache pyviz
 RUN pip install --no-cache bokeh
 # RUN pip install --no-cache pyviz_comms

@@ -3,6 +3,20 @@ FROM python:3.7-slim
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache notebook
 
+# create user with a home directory
+ARG NB_USER
+ARG NB_UID
+ENV USER ${NB_USER}
+ENV HOME /home/${NB_USER}
+COPY . ${HOME}
+
+RUN adduser --disabled-password \
+    --gecos "Default user" \
+    --uid ${NB_UID} \
+    ${NB_USER}
+WORKDIR ${HOME}
+USER ${USER}
+
 # install pyvista
 RUN apt update && apt -y install git libgl1-mesa-dev xvfb
 # RUN pip install --no-cache pyviz
@@ -22,17 +36,3 @@ ENV PYVISTA_AUTO_CLOSE false
 RUN which Xvfb
 RUN Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 RUN sleep 3
-
-# create user with a home directory
-ARG NB_USER
-ARG NB_UID
-ENV USER ${NB_USER}
-ENV HOME /home/${NB_USER}
-COPY . ${HOME}
-
-RUN adduser --disabled-password \
-    --gecos "Default user" \
-    --uid ${NB_UID} \
-    ${NB_USER}
-WORKDIR ${HOME}
-USER ${USER}

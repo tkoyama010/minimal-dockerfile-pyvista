@@ -5,7 +5,7 @@ RUN pip install --no-cache --upgrade pip && \
 
 # install pyvista
 RUN apt update && apt -y install git libgl1-mesa-dev xvfb
-RUN pip install --no-cache pyviz
+# RUN pip install --no-cache pyviz
 RUN pip install --no-cache bokeh
 RUN pip install --no-cache pyviz_comms
 RUN pip install --no-cache panel

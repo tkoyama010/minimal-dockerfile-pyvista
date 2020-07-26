@@ -6,6 +6,16 @@ RUN pip install --no-cache --upgrade pip && \
 
 RUN apt update && apt -y install git libgl1-mesa-dev xvfb
 
+# install pyvista
+# RUN pip install --no-cache pyviz
+RUN pip install --no-cache bokeh
+# RUN pip install --no-cache pyviz_comms
+RUN pip install --no-cache panel
+RUN pip install --no-cache lxml
+RUN pip install --no-cache git+git://github.com/pyvista/pyvista@master
+RUN pip install --no-cache matplotlib
+RUN pip install --no-cache pyct
+
 # create user with a home directory
 ARG NB_USER
 ARG NB_UID
@@ -20,15 +30,6 @@ RUN adduser --disabled-password \
 WORKDIR ${HOME}
 USER ${USER}
 
-# install pyvista
-# RUN pip install --no-cache pyviz
-RUN pip install --no-cache bokeh
-# RUN pip install --no-cache pyviz_comms
-RUN pip install --no-cache panel
-RUN pip install --no-cache lxml
-RUN pip install --no-cache git+git://github.com/pyvista/pyvista@master
-RUN pip install --no-cache matplotlib
-RUN pip install --no-cache pyct
 ENV DISPLAY :99.0
 ENV PYVISTA_OFF_SCREEN true
 ENV PYVISTA_USE_PANEL true

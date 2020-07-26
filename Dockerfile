@@ -38,4 +38,3 @@ ENV PYVISTA_PLOT_THEME document
 ENV PYVISTA_AUTO_CLOSE false
 RUN which Xvfb
 RUN Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-RUN sleep 3

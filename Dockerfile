@@ -8,13 +8,22 @@ RUN apt update && apt -y install git libgl1-mesa-dev xvfb
 
 # install pyvista
 # RUN pip install --no-cache pyviz
-RUN pip install --no-cache bokeh
+# RUN pip install --no-cache bokeh
 # RUN pip install --no-cache pyviz_comms
-RUN pip install --no-cache panel
-RUN pip install --no-cache lxml
+# RUN pip install --no-cache panel
+# RUN pip install --no-cache lxml
 RUN pip install --no-cache git+git://github.com/pyvista/pyvista@master
-RUN pip install --no-cache matplotlib
-RUN pip install --no-cache pyct
+# RUN pip install --no-cache matplotlib
+# RUN pip install --no-cache pyct
+
+ENV DISPLAY :99.0
+ENV PYVISTA_OFF_SCREEN true
+ENV PYVISTA_USE_PANEL true
+ENV PYVISTA_PLOT_THEME document
+# This is needed for Panel - use with cuation!
+ENV PYVISTA_AUTO_CLOSE false
+RUN which Xvfb
+RUN Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
 # create user with a home directory
 ARG NB_USER
@@ -30,11 +39,3 @@ RUN adduser --disabled-password \
 WORKDIR ${HOME}
 USER ${USER}
 
-ENV DISPLAY :99.0
-ENV PYVISTA_OFF_SCREEN true
-ENV PYVISTA_USE_PANEL true
-ENV PYVISTA_PLOT_THEME document
-# This is needed for Panel - use with cuation!
-ENV PYVISTA_AUTO_CLOSE false
-RUN which Xvfb
-RUN Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &

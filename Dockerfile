@@ -15,7 +15,6 @@ ENV PYVISTA_AUTO_CLOSE false
 RUN which Xvfb
 RUN Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 RUN sleep 3
-RUN exec "$@"
 
 # create user with a home directory
 ARG NB_USER
